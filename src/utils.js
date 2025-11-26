@@ -4,7 +4,8 @@ function setReturnUrl() {
     if (window.location.pathname === '/sessions/') {
         return window.location.href
     } else {
-        return window.location.href;//'https://your-company.com/'
+        // return window.location.href;//'https://your-company.com/'
+        return 'https://docs.adyen.com/'
     }
 }
 
@@ -20,7 +21,8 @@ const paymentMethodsConfig = {
 
 const paymentsDefaultConfig = {
     shopperReference: 'Checkout Components sample code test',
-    reference: 'Checkout Components sample code test',
+    //Custom reference number of the payment
+    reference: 'ShiDing_adyenrecruitment',
     countryCode: 'NL',
     channel: 'Web',
     returnUrl: setReturnUrl(),
