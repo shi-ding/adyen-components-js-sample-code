@@ -13,15 +13,44 @@ getClientKey().then(clientKey => {
     const urlParams = getSearchParameters(window.location.search);
 
     // Can add request params to this object
-    const pmReqConfig = {countryCode: urlParams.countryCode || DEFAULT_COUNTRY};
+    const pmReqConfig = { countryCode: urlParams.countryCode || DEFAULT_COUNTRY };
     getPaymentMethods(pmReqConfig).then(async paymentMethodsResponse => {
 
         paymentMethodsResponse.paymentMethods.reverse();
 
         let allowedPMS = urlParams.allowedpms;// e.g. &allowedpms=[scheme,ideal]
-        if(allowedPMS === '[]' || typeof allowedPMS === 'undefined') allowedPMS = [];// if empty, all PMs will show
+        if (allowedPMS === '[]' || typeof allowedPMS === 'undefined') allowedPMS = [];// if empty, all PMs will show
+        
+        // Custom styling for Card component
+        var styleObject = {
+            base: {
+                color: 'red',
+                fontSize: '16px',
+                fontSmoothing: 'antialiased',
+                fontFamily: 'Helvetica'
+            },
+            error: {
+                color: 'red'
+            },
+            placeholder: {
+                color: '#0edf62ff'
+            },
+            validated: {
+                color: 'green'
+            }
+        };
+
+        const cardConfiguration = {
+            styles: styleObject,
+            hasHolderName: true, // Show the cardholder name field.
+            holderNameRequired: true, // Mark the cardholder name field as required.
+            billingAddressRequired: true, // Show the billing address input fields and mark them as required.
+        };
 
         const configObj = {
+            paymentMethodsConfiguration: {
+                card: cardConfiguration
+            },
             environment: 'test',
             clientKey: clientKey, // Mandatory. clientKey from Customer Area
             paymentMethodsResponse,
